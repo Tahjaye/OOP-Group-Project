@@ -26,7 +26,7 @@ public class DOB {
 	
 	@Override
 	public String toString() {
-		return "day: " + day + "\n month: " + month + "\n year:" + year;
+		return day + "/" + month + "/" + year;
 	}
 	//Acessors
 	public int getYear() {
