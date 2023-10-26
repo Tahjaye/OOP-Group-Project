@@ -29,7 +29,7 @@ public class Menu {
     // NOTE:
     // ------------------------------------------------------------------------
     // ANSI Escape Codes for Text Color and Background:
-    // - Use \u001B[ followed by an escape code to specify text or background color.
+    // - Used \u001B[ followed by an escape code to specify text or background color.
     // - For example, \u001B[43m sets the background color to yellow.
     // ------------------------------------------------------------------------
 
