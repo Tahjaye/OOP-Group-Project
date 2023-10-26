@@ -9,8 +9,8 @@ public class Employee {
 	private double hoursWorked;
 	private int taxRegistrationNumber;
 	private int nisNumber;
-	private DOB dateOfBirth;
-	private DOB dateOfHire;
+	private Date dateOfBirth;
+	private Date dateOfHire;
 	
 	
 	//Default Constructor
@@ -29,7 +29,7 @@ public class Employee {
 	
 	//Primary Constructor
 	public Employee(int empID, String firstName, String lastName, Department department, String position, double hoursWorked,
-			int taxRegistrationNumber, int nisNumber, DOB dateOfBirth, DOB dateOfHire) {
+			int taxRegistrationNumber, int nisNumber, Date dateOfBirth, Date dateOfHire) {
 
 		this.empID = empID;
 		this.firstName = firstName;
@@ -90,10 +90,10 @@ public class Employee {
 	public int getNisNumber() {
 		return nisNumber;
 	}
-	public DOB getDateOfBirth() {
+	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
-	public DOB getDateOfHire() {
+	public Date getDateOfHire() {
 		return dateOfHire;
 	}
 	
@@ -125,10 +125,10 @@ public class Employee {
 	public void setNisNumber(int nisNumber) {
 		this.nisNumber = nisNumber;
 	}
-	public void setDateOfBirth(DOB dateOfBirth) {
+	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
-	public void setDateOfHire(DOB dateOfHire) {
+	public void setDateOfHire(Date dateOfHire) {
 		this.dateOfHire = dateOfHire;
 	}
 
