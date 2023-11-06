@@ -1,43 +1,53 @@
 package domain;
 
-public class Department {
-	private int deptCode;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+
+public class Department extends Entity{
 	private String deptName;
 	private double regRate;
 	private double overtimeRate;
 	
 	//Default/Parameterless Constructor
 	public Department() {
-		this.deptCode = 0;
+		super();
 		this.deptName = " ";
 		this.regRate = 0.0;
 		this.overtimeRate = 0.0;
+		
 	}
 	//Primary Constructor
 	public Department(int deptCode, String deptName, double regRate, double overtimeRate) {
-		this.deptCode = deptCode;
+		super(deptCode);
 		this.deptName = deptName;
 		this.regRate = regRate;
 		this.overtimeRate = overtimeRate;
+		
 	}
 	//Copy Constructor
 	public Department(Department obj) {
-		this.deptCode = obj.deptCode;
+		super(obj.getDeptCode());
 		this.deptName = obj.deptName;
 		this.regRate = obj.regRate;
 		this.overtimeRate = obj.overtimeRate;
-	}
-	
+		//System.out.println("/nDepartment Created");
+		//System.out.println(this.toString());
+	} 
 	
 	@Override
 	public String toString() {
-		return "deptCode: " + deptCode + "\ndeptName: " + deptName + "\nregRate: " + regRate
-				+ "\novertimeRate: " + overtimeRate ;
+		return "Department Code: " + this.getDeptCode() + "\nDepartment Name: " + deptName + "\nRegular Rate: " + regRate
+				+ "\nOvertime Rate: " + overtimeRate ;
 	}
+	public String toString(int i) {
+	      return "+----------------------+----------------------+-----------------+------------------+\n" +
+	              String.format("| %-20s | %-20s | %-15.2f | %-15.2f  |\n", this.getDeptCode(), this.getDeptName(), this.getRegRate(), this.getOvertimeRate()) +
+	              "+----------------------+----------------------+-----------------+------------------+";
+	   }
 	//Acessors
-	public int getDeptCode() {
-		return deptCode;
-	}
+	
 	public double getRegRate() {
 		return regRate;
 	}
@@ -49,9 +59,7 @@ public class Department {
 	}
 	
 	//Mutators
-	public void setDeptCode(int deptCode) {
-		this.deptCode = deptCode;
-	}
+	
 	public void setRegRate(double regRate) {
 		this.regRate = regRate;
 	}
@@ -61,7 +69,36 @@ public class Department {
 	public void setDeptName(String deptName) {
 		this.deptName = deptName;
 	}
-
+	
+	public void display() {
+		System.out.println(this.toString());
+	}
+	
+	public void display(Department obj) {
+		System.out.println(obj.toString());
+	}
+	public String fileData()  {
+		return this.getDeptCode() + "\t" + deptName + "\t" + regRate + "\t" + overtimeRate + "\n";
+	}
+	
+	@Override
+	public void store() {
+		FileWriter outFileStream = null;
+		
+		try {
+			outFileStream = new FileWriter(new File("DepartmentRates.txt"),true);
+			String objData = fileData();
+			outFileStream.write(objData);
+		} catch (IOException e){
+			e.printStackTrace();
+		} finally {
+			try {
+				outFileStream.close();
+			}catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
 
 }
-
