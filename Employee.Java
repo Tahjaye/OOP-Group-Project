@@ -1,24 +1,27 @@
 package domain;
 
-public class Employee {
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class Employee extends Entity{
 	private int empID;
 	private String firstName;
 	private String lastName;
-	private Department department;
 	private String position;
 	private double hoursWorked;
 	private int taxRegistrationNumber;
 	private int nisNumber;
-	private DOB dateOfBirth;
-	private DOB dateOfHire;
+	private Date dateOfBirth;
+	private Date dateOfHire;
 	
 	
 	//Default Constructor
 	public Employee() {
+		super();
 		this.empID = 0;
 		this.firstName = " ";
 		this.lastName = " ";
-		this.department = null;
 		this.position = " ";
 		this.hoursWorked = 0.0;
 		this.taxRegistrationNumber = 0;
@@ -28,13 +31,13 @@ public class Employee {
 	}
 	
 	//Primary Constructor
-	public Employee(int empID, String firstName, String lastName, Department department, String position, double hoursWorked,
-			int taxRegistrationNumber, int nisNumber, DOB dateOfBirth, DOB dateOfHire) {
-
+	public Employee(int empID, String firstName, String lastName, int deptCode, String position, double hoursWorked,
+			int taxRegistrationNumber, int nisNumber, Date dateOfBirth, Date dateOfHire) {
+		
+		super(deptCode);
 		this.empID = empID;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.department = department;
 		this.position = position;
 		this.hoursWorked = hoursWorked;
 		this.taxRegistrationNumber = taxRegistrationNumber;
@@ -45,10 +48,10 @@ public class Employee {
 	
 	//Copy Constructor
 	public Employee(Employee obj) {
+		super(obj.getDeptCode());
 		this.empID = obj.empID;
 		this.firstName = obj.firstName;
 		this.lastName = obj.lastName;
-		this.department = obj.department;
 		this.position = obj.position;
 		this.hoursWorked = obj.hoursWorked;
 		this.taxRegistrationNumber = obj.taxRegistrationNumber;
@@ -58,11 +61,14 @@ public class Employee {
 	}
 	@Override
 	public String toString() {
-		return "empID: " + empID + "\ntaxRegistrationNumber: " + taxRegistrationNumber + "\nnisNumber: " + nisNumber 
-				+ "\nfirstName: " + firstName + "\nlastName: " + lastName + department.toString() + "\nposition: " 
-				+ position + "\nhoursWorked: " + hoursWorked  + "\ndateOfBirth: " + dateOfBirth.toString() 
-				+ "\ndateOfHire: " + dateOfHire.toString();
+		return "Employee ID: " + empID + "\nTRN: " + taxRegistrationNumber + "\nNIS: " + nisNumber 
+				+ "\nFirstName: " + firstName + "\nLastName: " + lastName + "\nDepartment Code: " + this.getDeptCode() + "\nPosition: " 
+				+ position + "\nHours Worked: " + hoursWorked  + "\nDate Of Birth: " + dateOfBirth.toString() 
+				+ "\nDate Of Hire: " + dateOfHire.toString();
 	}
+	public String toString(int i) {
+	      return "";
+	   }
 	
 	
 	//Acessors
@@ -71,9 +77,6 @@ public class Employee {
 	}
 	public String getLastName() {
 		return lastName;
-	}
-	public Department getDepartment() {
-		return department;
 	}
 	public String getFirstName() {
 		return firstName;
@@ -90,10 +93,10 @@ public class Employee {
 	public int getNisNumber() {
 		return nisNumber;
 	}
-	public DOB getDateOfBirth() {
+	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
-	public DOB getDateOfHire() {
+	public Date getDateOfHire() {
 		return dateOfHire;
 	}
 	
@@ -106,9 +109,6 @@ public class Employee {
 	}
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}
-	public void setDepartment(Department department) {
-		this.department = department;
 	}
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
@@ -125,14 +125,49 @@ public class Employee {
 	public void setNisNumber(int nisNumber) {
 		this.nisNumber = nisNumber;
 	}
-	public void setDateOfBirth(DOB dateOfBirth) {
+	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
-	public void setDateOfHire(DOB dateOfHire) {
+	public void setDateOfHire(Date dateOfHire) {
 		this.dateOfHire = dateOfHire;
 	}
 
+	public void display() {
+		System.out.println(this.toString());
+	}
 	
+	public void display(Employee obj) {
+		System.out.println(obj.toString());
+	}
+	
+	@Override
+	public String fileData() {
+		return  empID + "\t" + taxRegistrationNumber + "\t" + nisNumber 
+				+ "\t" + firstName + "\t" + lastName + "\t" + this.getDeptCode() + "\t" 
+				+ position + "\t" + hoursWorked  + "\t" + dateOfBirth.getDay()
+				+ "\t" +dateOfBirth.getMonth()+ "\t"+dateOfBirth.getYear()
+				+ "\t" +dateOfHire.getDay()+ "\t" +dateOfHire.getMonth()+ "\t" +dateOfHire.getYear() + "\n";
+	}
+
+	@Override
+	public void store() {
+		FileWriter outFileStream = null;
+		
+		try {
+			outFileStream = new FileWriter(new File("EmployeePayroll.txt"),true);
+			String objData = fileData();
+			outFileStream.write(objData);
+		} catch (IOException e){
+			e.printStackTrace();
+		} finally {
+			try {
+				outFileStream.close();
+			}catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
 
 
 }
