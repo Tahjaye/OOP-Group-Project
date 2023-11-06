@@ -1,5 +1,6 @@
 package domain;
 
+//OKAY
 
 
 public class ProcessedPayroll extends Entity{
