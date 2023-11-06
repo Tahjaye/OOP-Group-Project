@@ -2,6 +2,7 @@ package domain;
 
 
 
+
 public class ProcessedPayroll extends Entity{
 	private double regularPay;
 	private double grossPay;
