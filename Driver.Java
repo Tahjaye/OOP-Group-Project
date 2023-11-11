@@ -53,7 +53,7 @@ public class Driver {
 			    }
 			}
 			input.nextLine(); // Clear the input from the scanner
-			
+			System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 			//-------------------------------------------------------------------------------
 			// Call methods based on user input
 			//-------------------------------------------------------------------------------
@@ -124,6 +124,7 @@ public class Driver {
 			        input.next(); // Clear the invalid input from the scanner
 			    }
 			}
+			System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 			//-------------------------------------------------------------------------------
 			// Call methods based on user input
 			//-------------------------------------------------------------------------------
@@ -254,18 +255,16 @@ public class Driver {
 			        input.next(); // Consume the invalid input
 			    }
 			}
-		
 
         Entity dept = new Department(deptCode, deptName, regRate, overtimeRate);
         System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         System.out.println("\nDepartment Created Succesfully\n");
-        //System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         System.out.println("+----------------------+----------------------+-----------------+------------------+\n" +
 	              "| Department Code      | Department Name      | Regular Rate    | Overtime Rate    |\n" +dept.toString(7));
-        //System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 		dept.store();
 		System.out.println("Returning to Main Menu");
 		menu.pause();
+		System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 		departmentOption();
 		//main(null);//returns to main
 		
@@ -299,13 +298,10 @@ public class Driver {
 				
 				Department dept1 = new Department(deptCode, deptName, regRate, overtimeRate);
 				
-				
 				if(dept1.getDeptCode() == searchId){
 					found = true;
-					//System.out.println("-------------------------------------------------------------------------------");
 					System.out.println("+----------------------+----------------------+-----------------+------------------+\n" +
 				              "| Department Code      | Department Name      | Regular Rate    | Overtime Rate    |\n" +dept1.toString(7)); 
-					//System.out.println("-------------------------------------------------------------------------------");
 					
 					// Validate and set department name
 					input.nextLine(); // Consume newline character
@@ -392,7 +388,7 @@ public class Driver {
 		int searchId;
 			// Validate and set department code
 			while (true) {
-				System.out.print("Enter department code you wish to VEIW: ");
+				System.out.print("Enter department code you wish to VIEW: ");
 				if (input.hasNextInt()) {
 					searchId = input.nextInt();
 				    break;
@@ -401,7 +397,6 @@ public class Driver {
 				    input.next(); // Consume the invalid input
 				}
 			}
-		
 		
 		try(Scanner sInFile = new Scanner(new File("DepartmentRates.txt"))){
 		int deptCode;
@@ -417,10 +412,8 @@ public class Driver {
 			Entity dept1 = new Department(deptCode, deptName, regRate, overtimeRate);
 			if(dept1.getDeptCode() == searchId){
 				found = true;
-				//System.out.println("-------------------------------------------------------------------------------");
 				System.out.println("+----------------------+----------------------+-----------------+------------------+\n" +
 			              "| Department Code      | Department Name      | Regular Rate    | Overtime Rate    |\n" +dept1.toString(7) );
-				//System.out.println("-------------------------------------------------------------------------------");
 				break;
 			}
 		}
@@ -428,14 +421,15 @@ public class Driver {
 			System.err.println("Department not found\n");
 		}
 		sInFile.close();
-		menu.pause();
-		departmentOption();
 		
 		} catch (FileNotFoundException e) {
 			System.err.println("File not Found...Returning to Department Menu");
+			
+		}finally {
 			menu.pause();
+			System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 			departmentOption();
-		}	
+		}
 	}
 	public static void veiwAllDeparment() {
 		try(Scanner sInFile = new Scanner(new File("DepartmentRates.txt"))){
@@ -450,25 +444,21 @@ public class Driver {
 				deptName = sInFile.next();
 				regRate = sInFile.nextDouble();
 				overtimeRate = sInFile.nextDouble();
-				
-				//System.out.println("-------------------------------------------------------------------------------");
+
 				System.out.println(String.format("| %-20s | %-20s | %-15.2f | %-15.2f  |\n", deptCode, deptName, regRate, overtimeRate) +
 			              "+----------------------+----------------------+-----------------+------------------+" );
-				//System.out.println("-------------------------------------------------------------------------------");
-			
 			}
 			
 			sInFile.close();
-			menu.pause();
-			departmentOption();
 			
 			} catch (FileNotFoundException e) {
 				System.err.println("File not Found...Returning to Department Menu");
+				
+			}finally {
 				menu.pause();
+				System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 				departmentOption();
 			}
-		
-		
 	}
 	
 	
@@ -501,19 +491,23 @@ public class Driver {
 		        input.next(); // Clear the invalid input from the scanner
 		    }
 		}
+		System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 		//-------------------------------------------------------------------------------
 		// Call methods based on user input
 		//-------------------------------------------------------------------------------
 		switch(empChoice) {
 		case 1:
+			
 			addEmployee();
 
 			break;
 		case 2:
+			
 			updateEmployee();
 			
 			break;
 		case 3:
+			
 			veiwEmployee();
 			
 			break;
@@ -698,10 +692,14 @@ public class Driver {
 			} catch (FileNotFoundException e) {
 				System.err.println("File not Found...Returning to Employee Menu");
 				menu.pause();
+				System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 				employeeOption();
 			}
 	 	}
-
+      
+        position = input.nextLine(); 
+        
+        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         // Validate and get position
         while(true) {
 	        System.out.print("Enter Position: ");
@@ -859,16 +857,16 @@ public class Driver {
 		emp1.store();
 		System.out.println("Returning to Main Menu");
 		menu.pause();
+		System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 		employeeOption();
 
 	}
 	public static void updateEmployee() {
 		int searchId;
         String[] months= {"January","Feburary", "March","April","May", "June","July","August", "September","October","November", "December"};
-        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         // Validate and set department code
 		while (true) {
-			System.out.print("Enter Employee ID you wish to VEIW: ");
+			System.out.print("Enter Employee ID you wish to UPDATE: ");
 			if (input.hasNextInt()) {
 				searchId = input.nextInt();
 			    break;
@@ -924,6 +922,7 @@ public class Driver {
 			            input.next(); // Consume the invalid input
 			        }
 			        taxRegistrationNumber = input.nextInt();
+			        emp1.setTaxRegistrationNumber(taxRegistrationNumber);
 			        
 			        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 			        // Validate and get nisNumber
@@ -934,7 +933,8 @@ public class Driver {
 			            input.next(); // Consume the invalid input
 			        }
 			        nisNumber = input.nextInt();
-
+			        emp1.setNisNumber(nisNumber);
+			        
 			        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 			        // Validate and get firstName
 			        while(true) {
@@ -949,6 +949,8 @@ public class Driver {
 			        if (firstName.contains(" ")) {
 						firstName = firstName.replace(" ", "-"); // Replace space with (-)
 					}
+			        emp1.setFirstName(firstName);
+			        
 			        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 			        // Validate and get lastName
 			        while(true) {
@@ -963,6 +965,8 @@ public class Driver {
 			        if (lastName.contains(" ")) {
 						lastName = lastName.replace(" ", "-"); // Replace space with (-)
 					}
+			        
+			        emp1.setLastName(lastName);
 			        
 			        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 			        // Validate and get deptCode
@@ -1008,11 +1012,15 @@ public class Driver {
 						
 							System.err.println("File not Found...Returning to Employee Menu");
 							menu.pause();
+							System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 							employeeOption();
 						}
 				 	}
+			        emp1.setDeptCode(deptCode);
 
-			        //System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+			        position = input.nextLine(); 
+			        
+			        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 			        // Validate and get position
 			        while(true) {
 				        System.out.print("Enter Position: ");
@@ -1027,6 +1035,8 @@ public class Driver {
 						position = position.replace(" ", "-"); // Replace space with (-)
 					}
 			        
+			        emp1.setPosition(position);
+			        
 			        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 			        // Validate and get hoursWorked
 			        System.out.print("Enter Hours Worked: ");
@@ -1037,7 +1047,7 @@ public class Driver {
 			        }
 			        hoursWorked = input.nextDouble();
 
-			        
+			        emp1.setHoursWorked(hoursWorked);
 			        
 			        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 			        // Validate and get birthYear
@@ -1056,6 +1066,9 @@ public class Driver {
 				        	System.err.println("Invalid BIRTH YEAR try again... Enter a year between 1907-2006");
 				        }
 			        }
+			        
+			        
+			        
 			        
 			        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 			        // Validate and get birthMonth
@@ -1099,6 +1112,7 @@ public class Driver {
 				        }
 			        }
 			        
+			        emp1.setDateOfBirth(new Date(birthDay, birthMonth, birthYear));
 			        
 			        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 				    // Validate and get hireYear
@@ -1138,6 +1152,7 @@ public class Driver {
 			        
 			        
 			        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+			        
 			        // Validate and get hireDay
 			        while (true) {
 				        System.out.print("Enter Hire Day: ");
@@ -1162,6 +1177,8 @@ public class Driver {
 				        }
 				        
 			        }
+			        emp1.setDateOfHire(new Date(hireDay, hireMonth, hireYear));
+			        emp1.toString();
 				}
 				updatedEmployees.add(emp1);
 				count++;
@@ -1179,12 +1196,9 @@ public class Driver {
 					e.printStackTrace();
 				}
 				
-				//System.out.println("+----------------------+----------------------+-----------------+------------------+\n" +
-			              //"| Department Code      | Department Name      | Regular Rate    | Overtime Rate    |\n" +
-			              //"+----------------------+----------------------+-----------------+------------------+" );
-				
 				for (int i = 0; i < count; i++) {
-					System.out.println(updatedEmployees.get(i).toString(7));
+					System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+					System.out.println(updatedEmployees.get(i).toString());
 					updatedEmployees.get(i).store();
 				}
 			}
@@ -1192,20 +1206,20 @@ public class Driver {
 		
 		} catch (FileNotFoundException e) {
 			System.err.println("File not Found...Returning to Employee Menu");
+			
+		}finally {
 			menu.pause();
+			System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 			employeeOption();
-		}	
+		}
 		
-		menu.pause();
-		employeeOption();
+		
 		
 	}
 	public static void veiwEmployee() {
 		int searchId;
-
-			// Validate and set department code
 			while (true) {
-				System.out.print("Enter Employee ID you wish to VEIW: ");
+				System.out.print("Enter Employee ID you wish to VIEW: ");
 				if (input.hasNextInt()) {
 					searchId = input.nextInt();
 				    break;
@@ -1259,11 +1273,11 @@ public class Driver {
 		
 		} catch (FileNotFoundException e) {
 			System.err.println("File not Found...Returning to Employee Menu");
+		}finally {
 			menu.pause();
+			System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 			employeeOption();
 		}
-		menu.pause();
-		employeeOption();
 	}
 	public static void veiwAllEmployee() {
 		try(Scanner sInFile = new Scanner(new File("EmployeePayroll.txt"))){
@@ -1289,26 +1303,24 @@ public class Driver {
 				hireDay = sInFile.nextInt();
 				hireMonth = sInFile.nextInt();
 				hireYear = sInFile.nextInt();
-			
 
-				System.out.println("-------------------------------------------------------------------------------");
+				//System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 				System.out.println("Empoyee ID: " + empID + "\nTRN: " + taxRegistrationNumber + "\nNIS: " + nisNumber 
 						+ "\nFirstName: " + firstName + "\nLastName: " + lastName + "\nDepartment Code" + deptCode + "\nPosition: " 
 						+ position + "\nHours Worked: " + hoursWorked  + "\nDate Of Birth: " + birthDay + "/" + birthMonth + "/" + birthYear 
 						+ "\nDate Of Hire: " + hireDay + "/" + hireMonth + "/" + hireYear);
-				System.out.println("-------------------------------------------------------------------------------");
-
 			}
 	
 			sInFile.close();
 			
 			} catch (FileNotFoundException e) {
 				System.err.println("File not Found Returning....to Employee Menu");
+			}finally {	
 				menu.pause();
+				System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 				employeeOption();
 			}
-		menu.pause();
-		employeeOption();
+		
 	}
 	public static void deleteEmployee() {
 		
@@ -1316,7 +1328,7 @@ public class Driver {
 
 		// Validate and set department code
 		while (true) {
-			System.out.print("Enter Employee ID you wish to VEIW: ");
+			System.out.print("Enter Employee ID you wish to DELETE: ");
 			if (input.hasNextInt()) {
 				searchId = input.nextInt();
 			    break;
@@ -1357,12 +1369,12 @@ public class Driver {
 				Employee emp1 = new Employee(empID, firstName, lastName, deptCode, position, hoursWorked, taxRegistrationNumber, nisNumber, new Date(birthDay, birthMonth, birthYear),   new Date(hireDay, hireMonth, hireYear));
 				if(emp1.getEmpID() == searchId){
 					found = true;
-					System.out.println("-------------------------------------------------------------------------------");
+					System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 					System.out.println("Empoyee ID: " + empID + "\nTRN: " + taxRegistrationNumber + "\nNIS: " + nisNumber 
 							+ "\nFirstName: " + firstName + "\nLastName: " + lastName + "\nDepartment Code: " + deptCode + "\nPosition: " 
 							+ position + "\nHours Worked: " + hoursWorked  + "\nDate Of Birth: " + birthDay + "/" + birthMonth + "/" + birthYear 
 							+ "\nDate Of Hire: " + hireDay + "/" + hireMonth + "/" + hireYear);
-					System.out.println("-------------------------------------------------------------------------------");
+					System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 				}else {
 					updatedEmployees.add(emp1);
 					count++;
@@ -1382,7 +1394,8 @@ public class Driver {
 				
 				
 				for (int i = 0; i < count; i++) {
-					System.out.println(updatedEmployees.get(i).toString(7));
+					
+					System.out.println(updatedEmployees.get(i).toString());
 					updatedEmployees.get(i).store();
 				}
 			}
@@ -1390,11 +1403,12 @@ public class Driver {
 		
 		} catch (FileNotFoundException e) {
 			System.err.println("File not Found...Returning to Employee Menu");
+	
+		}finally {
 			menu.pause();
-			employeeOption();
+			System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+			employeeOption();	
 		}
-		menu.pause();
-		employeeOption();
 		
 	}
 	
@@ -1436,19 +1450,23 @@ public class Driver {
 		        input.next(); // Clear the invalid input from the scanner
 		    }
 		}
+		System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 		//-------------------------------------------------------------------------------
 		// Call methods based on user input
 		//-------------------------------------------------------------------------------
 		switch(payrollChoice) {
 		case 1:
+			
 			processPayroll();
 
 			break;
 		case 2:
+			
 			veiwPayroll();
 			
 			break;
 		case 3:
+			
 			veiwDeparmentPayroll();
 			
 			break;
@@ -1482,7 +1500,7 @@ public class Driver {
 			String firstName, lastName, position;
 			double hoursWorked;
 			int birthMonth, birthDay, birthYear, hireMonth, hireDay, hireYear;
-	
+			int count = 0;
 			while(sInFile.hasNext()){
 				
 				empID = sInFile.nextInt();
@@ -1502,23 +1520,127 @@ public class Driver {
 			
 				Employee emp1 = new Employee(empID, firstName, lastName, deptCode, position, hoursWorked, taxRegistrationNumber, nisNumber, new Date(birthDay, birthMonth, birthYear),   new Date(hireDay, hireMonth, hireYear));
 				payroll.add(new ProcessedPayroll(emp1));
+				payroll.get(count).calculatePay();
+				payroll.get(count).store();
+				count++;
 			}
-	
+			System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+			System.out.println("\nPayroll Processed...........");
 			sInFile.close();
 			
-			} catch (FileNotFoundException e) {
-				System.err.println("File not Found Returning....to Employee Menu");
-				menu.pause();
-				employeeOption();
-			}
-		
-		
+		} catch (FileNotFoundException e) {
+			System.err.println("File not Found Returning....to Employee Menu");
+		}finally {
+			menu.pause();
+			System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+			payrollOption();
+		}
 	}
 	public static void veiwPayroll() {
+		int searchId;
+		while (true) {
+			System.out.print("Enter Employee ID you wish to VIEW: ");
+			if (input.hasNextInt()) {
+				searchId = input.nextInt();
+			    break;
+			} else {
+			    System.err.println("Invalid input. Please enter an integer for Employee ID.");
+			    input.next(); // Consume the invalid input
+			}
+		}
 		
+		try(Scanner sInFile = new Scanner(new File("ProcessedPayroll.txt"))){
+			int deptCodeInFile, empIDInFile;
+			String chequeNumberInFile, firstNameInFile, lastNameInFile, positionInFile;
+			double hoursWorkedInFile, regularPayInFile, overtimePayInFile, grossPayInFile;
+			boolean found = true;
+			while(sInFile.hasNext()){
+				
+				chequeNumberInFile = sInFile.next();
+				empIDInFile = sInFile.nextInt();
+				firstNameInFile = sInFile.next();
+				lastNameInFile = sInFile.next();
+				deptCodeInFile = sInFile.nextInt();
+				positionInFile = sInFile.next();
+				hoursWorkedInFile = sInFile.nextDouble();
+				regularPayInFile = sInFile.nextDouble();
+				overtimePayInFile = sInFile.nextDouble();
+				grossPayInFile = sInFile.nextDouble();
+				
+				
+				if(searchId == empIDInFile){
+					found = true;
+					System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+					System.out.println("Cheque Number: " + chequeNumberInFile + "\nEmployee ID: " +empIDInFile + "\nFirstName: " +firstNameInFile + "\nLastName: " + lastNameInFile + "\nDepartment Code: " + deptCodeInFile + "\nPosition: " + positionInFile + "\nHours Worked: " + hoursWorkedInFile + "\nRegular Pay: " + regularPayInFile + "\nOvertime Pay: " + overtimePayInFile + "\nGross Pay: " + grossPayInFile );
+					break;
+				}
+			}
+			if (!found) {
+				System.err.println("Employee not found\n");
+			}
+			sInFile.close();
+		
+		} catch (FileNotFoundException e) {
+			System.err.println("File not Found...");
+			
+		}finally {
+			menu.pause();
+			System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+			payrollOption();
+		}
 	}
 	public static void veiwDeparmentPayroll() {
+		int searchId;
+		while (true) {
+			System.out.print("Enter DEPARTMENT CODE you wish to VIEW: ");
+			if (input.hasNextInt()) {
+				searchId = input.nextInt();
+			    break;
+			} else {
+			    System.err.println("Invalid input. Please enter an integer for Employee ID.");
+			    input.next(); // Consume the invalid input
+			}
+		}
 		
+		try(Scanner sInFile = new Scanner(new File("ProcessedPayroll.txt"))){
+			int deptCodeInFile, empIDInFile;
+			String chequeNumberInFile, firstNameInFile, lastNameInFile, positionInFile;
+			double hoursWorkedInFile, regularPayInFile, overtimePayInFile, grossPayInFile;
+			boolean found = true;
+			while(sInFile.hasNext()){
+				
+				chequeNumberInFile = sInFile.next();
+				empIDInFile = sInFile.nextInt();
+				firstNameInFile = sInFile.next();
+				lastNameInFile = sInFile.next();
+				deptCodeInFile = sInFile.nextInt();
+				positionInFile = sInFile.next();
+				hoursWorkedInFile = sInFile.nextDouble();
+				regularPayInFile = sInFile.nextDouble();
+				overtimePayInFile = sInFile.nextDouble();
+				grossPayInFile = sInFile.nextDouble();
+				
+				
+				if(searchId == deptCodeInFile){
+					found = true;
+					System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+					System.out.println("Cheque Number: " + chequeNumberInFile + "\nEmployee ID: " +empIDInFile + "\nFirstName: " +firstNameInFile + "\nLastName: " + lastNameInFile + "\nDepartment Code: " + deptCodeInFile + "\nPosition: " + positionInFile + "\nHours Worked: " + hoursWorkedInFile + "\nRegular Pay: " + regularPayInFile + "\nOvertime Pay: " + overtimePayInFile + "\nGross Pay: " + grossPayInFile );
+					
+				}
+			}
+			if (!found) {
+				System.err.println("Employee not found\n");
+			}
+			sInFile.close();
+		
+		} catch (FileNotFoundException e) {
+			System.err.println("File not Found...");
+			
+		}finally {
+			menu.pause();
+			System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+			payrollOption();
+		}
 	}
 
 
