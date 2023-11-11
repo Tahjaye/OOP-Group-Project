@@ -80,9 +80,9 @@ public class ProcessedPayroll extends Employee{
 				if(dept1.getDeptCode() == this.getDeptCode()){
 					found = true;
 					//System.out.println("-------------------------------------------------------------------------------");
-					System.out.println("+----------------------+----------------------+-----------------+------------------+\n" +
-				              "| Department Code      | Department Name      | Regular Rate    | Overtime Rate    |\n" +dept1.toString(7) );
-					System.out.println("-------------------------------------------------------------------------------");
+					//System.out.println("+----------------------+----------------------+-----------------+------------------+\n" +
+				              //"| Department Code      | Department Name      | Regular Rate    | Overtime Rate    |\n" +dept1.toString(7) );
+					//System.out.println("-------------------------------------------------------------------------------");
 					break;
 				}
 			}
@@ -110,7 +110,7 @@ public class ProcessedPayroll extends Employee{
 	@Override
 	public String fileData() {
 		
-		return this.chequeNumber + "\t"+ this.getFirstName()+ "\t"+ this.getLastName()+ "\t"+ this.getDeptCode()+ "\t"+ this.getPosition()+ "\t"+ this.getHoursWorked()+ "\t"+ this.regularPay+ "\t"+ this.overtimePay+ "\t"+ this.grossPay+ "\n";
+		return this.chequeNumber + "\t"+ this.getEmpID()+ "\t" + this.getFirstName()+ "\t"+ this.getLastName()+ "\t"+ this.getDeptCode()+ "\t"+ this.getPosition()+ "\t"+ this.getHoursWorked()+ "\t"+ this.regularPay+ "\t"+ this.overtimePay+ "\t"+ this.grossPay+ "\n";
 	}
 	@Override
 	public void display() {
@@ -142,8 +142,9 @@ public class ProcessedPayroll extends Employee{
 	}
 	@Override
 	public String toString() {
-		return "Cheque Number: " + this.chequeNumber + "\nFirstName: " +this.getFirstName() + "\nLastName: " + this.getLastName() +"\nDepartment Code: " + this.getDeptCode() + "\nPosition: " + this.getPosition() + "\nHours Worked: " + this.getHoursWorked() + "\nRegular Pay: " + regularPay + "\nOvertime Pay: " + overtimePay + "\nGross Pay: " + grossPay ;
+		return "Cheque Number: " + this.chequeNumber + "\nEmployee ID: " + this.getEmpID() + "\nFirstName: " +this.getFirstName() + "\nLastName: " + this.getLastName() +"\nDepartment Code: " + this.getDeptCode() + "\nPosition: " + this.getPosition() + "\nHours Worked: " + this.getHoursWorked() + "\nRegular Pay: " + this.regularPay + "\nOvertime Pay: " + this.overtimePay + "\nGross Pay: " + this.grossPay ;
 	}
+	
 	@Override
 	public String toString(int i) {
 	      return "";
@@ -176,14 +177,15 @@ public class ProcessedPayroll extends Employee{
 	        }
 	        
 	        
-	        try(Scanner sInFile = new Scanner(new File("DepartmentRates.txt"))){
-				int deptCodeInFile;
+	        try(Scanner sInFile = new Scanner(new File("ProcessedPayroll.txt"))){
+				int deptCodeInFile, empIDInFile;
 				String chequeNumberInFile, firstNameInFile, lastNameInFile, positionInFile;
 				double hoursWorkedInFile, regularPayInFile, overtimePayInFile, grossPayInFile;
 				
 				while(sInFile.hasNext()){
 					
 					chequeNumberInFile = sInFile.next();
+					empIDInFile = sInFile.nextInt();
 					firstNameInFile = sInFile.next();
 					lastNameInFile = sInFile.next();
 					deptCodeInFile = sInFile.nextInt();
