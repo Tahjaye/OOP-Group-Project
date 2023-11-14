@@ -8,6 +8,7 @@ Author: Tahjaye Edwards
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------
 This file pertains to Questions 8 which states:
 The company also records the date of birth and date the employee was hired.
+Implementation of Composition in the program
 
 //Implemented before I realized there is an built in Date class.
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------
