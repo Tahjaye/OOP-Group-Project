@@ -1,6 +1,22 @@
 package domain;
+/*
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------
+NOTES:
+Date: 10/15/2023
+Author: Tahjaye Edwards
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------
+This file pertains to the source code segment: 
+	i. Implementation of Inheritance in the program  
+	ii. Implementation of Polymorphism in the program  
+	iii. Implementation of Method Overriding and Overloading in the program
 
-public abstract class Entity {
+The Employee class encapsulates the core features and functionalities essential for managing individual employees within the system. 
+
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+*/
+
+public abstract class Entity {//this serves as the parent class for the other main entities 
 	private int deptCode;
 	
 	public Entity() {

@@ -1,5 +1,26 @@
 package domain;
 
+/*
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------
+NOTES:
+Date: 10/15/2023
+Author: Tahjaye Edwards
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------
+This file pertains to Questions 4 which states:
+The user should maintain the Employee data via a menu with the options: 
+	i. Add: which allows the user to add a new employee record to the system. 
+	ii. Update: which allows the user to update an existing employee record. 
+	iii. View: which allows the user to view a single employee record. 
+	iv. View All in Department: which allows the user to view all employee records  for a specified department. 
+	v. Delete: which allows the user to delete an employee record. 
+ 
+The Employee class encapsulates the core features and functionalities essential for managing individual employees within the system. 
+
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+*/
+
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;

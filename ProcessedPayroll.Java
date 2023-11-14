@@ -1,5 +1,23 @@
 package domain;
 
+/*
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------
+NOTES:
+Date: 10/15/2023
+Author: Tahjaye Edwards
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------
+This file pertains to Questions 5 which states:
+The user shall process the Employee Payroll via a menu with the options: 
+	i. Process Payroll: Calculates payroll and generates Processed Payroll File. 
+	ii. View Payroll: Allows the user to view a single employee payroll record. 
+	iii. View Department Payroll: Allows the user to view all employee payroll  records for a specific department. 
+
+The Payroll class is a comprehensive and dynamic component designed to handle the intricacies of employee compensation within the system.  
+
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+*/
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -8,7 +26,7 @@ import java.util.Scanner;
 import java.util.Random;
 
 public class ProcessedPayroll extends Employee{
-	private final String chequeNumber = generateChequeNumber();
+	private final String chequeNumber = generateChequeNumber();//generates a random unique Cheque number
 	private double regularPay;
 	private double overtimePay;
 	private double grossPay;
@@ -23,6 +41,7 @@ public class ProcessedPayroll extends Employee{
 		this.grossPay = 0.0;
 	}
 	
+	//basic constructor @Overload
 	public ProcessedPayroll(double regularPay, double overtimePay, double grossPay) {
 		super();
 		this.regularPay = regularPay;
@@ -38,7 +57,7 @@ public class ProcessedPayroll extends Employee{
 		this.grossPay = 0.0;
 	}
 	
-	
+	//setters and getters
 	public double getRegularPay() {
 		return regularPay;
 	}
@@ -58,11 +77,13 @@ public class ProcessedPayroll extends Employee{
 	public void setOvertimePay(double overtimePay) {
 		this.overtimePay = overtimePay;
 	}
+	
 	//notice there is no setter for the Cheque Number
 	public String getChequeNumber() {
 		return chequeNumber;
 	}
 
+	//function used to calculate the Pay for the employee
 	public void calculatePay() {
 		Department dept1 = null;
 		try(Scanner sInFile = new Scanner(new File("DepartmentRates.txt"))){
@@ -79,10 +100,6 @@ public class ProcessedPayroll extends Employee{
 				dept1 = new Department(deptCode, deptName, regRate, overtimeRate);
 				if(dept1.getDeptCode() == this.getDeptCode()){
 					found = true;
-					//System.out.println("-------------------------------------------------------------------------------");
-					//System.out.println("+----------------------+----------------------+-----------------+------------------+\n" +
-				              //"| Department Code      | Department Name      | Regular Rate    | Overtime Rate    |\n" +dept1.toString(7) );
-					//System.out.println("-------------------------------------------------------------------------------");
 					break;
 				}
 			}
@@ -107,12 +124,12 @@ public class ProcessedPayroll extends Employee{
 		
 	}
 	
-	@Override
+	@Override //creates a file writable string 
 	public String fileData() {
 		
 		return this.chequeNumber + "\t"+ this.getEmpID()+ "\t" + this.getFirstName()+ "\t"+ this.getLastName()+ "\t"+ this.getDeptCode()+ "\t"+ this.getPosition()+ "\t"+ this.getHoursWorked()+ "\t"+ this.regularPay+ "\t"+ this.overtimePay+ "\t"+ this.grossPay+ "\n";
 	}
-	@Override
+	@Override // Displays the info in the object
 	public void display() {
 		System.out.println(this.toString());
 	}
@@ -121,7 +138,7 @@ public class ProcessedPayroll extends Employee{
 		System.out.println(obj.toString());
 	}
 	
-	@Override
+	@Override //Stores the object to the file 
 	public void store() {
 		FileWriter outFileStream = null;
 		
@@ -142,25 +159,27 @@ public class ProcessedPayroll extends Employee{
 	}
 	@Override
 	public String toString() {
-		return "Cheque Number: " + this.chequeNumber + "\nEmployee ID: " + this.getEmpID() + "\nFirstName: " +this.getFirstName() + "\nLastName: " + this.getLastName() +"\nDepartment Code: " + this.getDeptCode() + "\nPosition: " + this.getPosition() + "\nHours Worked: " + this.getHoursWorked() + "\nRegular Pay: " + this.regularPay + "\nOvertime Pay: " + this.overtimePay + "\nGross Pay: " + this.grossPay ;
+		return "Cheque Number: " + this.chequeNumber + "\nEmployee ID: " + this.getEmpID() + "\nFirstName: " +this.getFirstName() + "\nLastName: " + this.getLastName() +"\nDepartment Code: " + this.getDeptCode() + "\nPosition: " + this.getPosition() + "\nHours Worked: " + this.getHoursWorked() + "\nRegular Pay: $" + this.regularPay + "\nOvertime Pay: $" + this.overtimePay + "\nGross Pay: $" + this.grossPay ;
 	}
 	
 	@Override
 	public String toString(int i) {
 	      return "";
 	}
+	
+	//function to generate a random unique cheque Number
 	public static String generateChequeNumber() {
 		boolean found = false;
-        // Set the length of the cheque number
-        int length = 10; // You can adjust the length as per your requirements
+        //Set the length of the cheque number
+        int length = 10; 
 
-        // Characters allowed in the cheque number
+        //Characters allowed in the cheque number
         String characters = "0123456789";
 
         // Create a StringBuilder to store the generated cheque number
         StringBuilder chequeNumber = new StringBuilder();
         while (true){
-	        // Get the current time in milliseconds
+	        // Get the current time 
 	        long currentTimeMillis = System.currentTimeMillis();
 	
 	        // Seed the Random class with the current time
@@ -176,7 +195,7 @@ public class ProcessedPayroll extends Employee{
 	            chequeNumber.append(characters.charAt(randomIndex));
 	        }
 	        
-	        
+	        //Ensure that the number is truly unique by checking the file
 	        try(Scanner sInFile = new Scanner(new File("ProcessedPayroll.txt"))){
 				int deptCodeInFile, empIDInFile;
 				String chequeNumberInFile, firstNameInFile, lastNameInFile, positionInFile;

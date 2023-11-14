@@ -21,8 +21,6 @@ Additionally, extra marks should be alloted for:
 */
 //-------------------------------------------------------------------------------
 
-//import java.io.IOException;
-//import java.util.Scanner;
 
 public class Menu {
 	// ------------------------------------------------------------------------
@@ -56,29 +54,29 @@ public class Menu {
     // Display the menu for department rates
     public void displayDepartmentRatesMenu() {
         System.out.println(YELLOW_TEXT + "\nDEPARTMENT RATE MENU\n" + DEFAULT);
-        System.out.println("1. " + YELLOW_TEXT + "ADD: " + DEFAULT + "\t| add new department rates record to the system");
-        System.out.println("2. " + YELLOW_TEXT + "UPDATE:" + DEFAULT + "\t| update an existing department record.");
-        System.out.println("3. " + YELLOW_TEXT + "VIEW:" + DEFAULT + "\t| view a single department record.");
-        System.out.println("4. " + YELLOW_TEXT + "VIEW ALL:" + DEFAULT + "\t| view all department records");
+        System.out.println("1. " + YELLOW_TEXT + "ADD:     " + DEFAULT + "\t| Add New Department Rates Record to the System");
+        System.out.println("2. " + YELLOW_TEXT + "UPDATE:  " + DEFAULT + "\t| Update an Existing Department Record.");
+        System.out.println("3. " + YELLOW_TEXT + "VIEW:    " + DEFAULT + "\t| View a Single Department Record.");
+        System.out.println("4. " + YELLOW_TEXT + "VIEW ALL:" + DEFAULT + "\t| View ALL Department Records");
         System.out.println(RED + "0. Back to Main Menu" + DEFAULT);
     }
 //-------------------------------------------------------------------------------
     //Display the menu 
     public void displayEmployeeDataMenu(){
         System.out.println(GREEN + "\nEMPLOYEE DATA MENU\n" + DEFAULT);
-        System.out.println("1. " + GREEN + "ADD: " + DEFAULT + "\t| add a new employee record");
-        System.out.println("2. " + GREEN + "UPDATE:" + DEFAULT + "\t| update an existing employee record");
-        System.out.println("3. " + GREEN + "VIEW:" + DEFAULT + "\t| view a single employee record");
-        System.out.println("4. " + GREEN + "VIEW ALL:" + DEFAULT + "\t| view all employees records");
-        System.out.println(RED + "5. DELETE \t| delete an employee record");
+        System.out.println("1. " + GREEN + "ADD:     " + DEFAULT + "\t| Add a New Employee Record");
+        System.out.println("2. " + GREEN + "UPDATE:  " + DEFAULT + "\t| Update an Existing Employee Record");
+        System.out.println("3. " + GREEN + "VIEW:    " + DEFAULT + "\t| View a Single Employee Record");
+        System.out.println("4. " + GREEN + "VIEW ALL:" + DEFAULT + "\t| View ALL Employees Records");
+        System.out.println(RED + "5. DELETE    | Delete an Employee Record");
         System.out.println(RED + "0. Back to Main Menu" + DEFAULT);
     }
 //-------------------------------------------------------------------------------
     public void displayPayrollProcessingMenu(){
         System.out.println(MAGENTA + "\nPAYROLL PROCESSING MENU\n" + DEFAULT);
-        System.out.println("1. " + MAGENTA + "Process Payroll: " + DEFAULT + "\t\t| calculates payroll and generates File");
-        System.out.println("2. " + MAGENTA + "View Payroll:  " + DEFAULT + "\t\t| view a single employee payroll record");
-        System.out.println("3. " + MAGENTA + "View Department Payroll:" + DEFAULT + "\t| view all employee payroll records for a specific department.");
+        System.out.println("1. " + MAGENTA + "Process Payroll:        " + DEFAULT + "\t| Calculates Payroll and Generates File");
+        System.out.println("2. " + MAGENTA + "View Payroll:           " + DEFAULT + "\t| View a Single Employee Payroll Record");
+        System.out.println("3. " + MAGENTA + "View Department Payroll:" + DEFAULT + "\t| View ALL Employee Payroll Records for a Specific Department.");
         System.out.println(RED + "0. Back to Main Menu" + DEFAULT);
     }
 
@@ -86,9 +84,8 @@ public class Menu {
     public void pause(){
     	
     	try {
-			Thread.sleep(2000);
+			Thread.sleep(2000);//simple pauses the program; used to improve feel
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 		
