@@ -1,8 +1,29 @@
  package domain;
+ 
+/*
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------
+NOTES:
+Date: 10/15/2023
+Author: Tahjaye Edwards
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------
+This file pertains to Questions 3, 4, 5 and 6 which states:
+ The user shall access the system via a menu. Options include:
+     i. Department Rates data
+     ii. maintain the Employee data
+     iii. Employee Payroll.
+     
+     
+The Driver File is designed to manage employee information, departmental structures, and payroll processes. 
+This driver serves as the nucleus of a sophisticated system, offering an array of features that enhance accuracy and streamline workflow. 
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-//-------------------------------------------------------------------------------
+*/
+ 
+ 
+ 
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //Importing of necessary library files used throughout the file
-//-------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -89,6 +110,9 @@ public class Driver {
 	
 	
 	public static void departmentOption() {
+		//------------------------------------------------------------------------------------------------------------------------------------------------------------------
+		//Prompts and validates the department Menu
+		//------------------------------------------------------------------------------------------------------------------------------------------------------------------
 		
 			int dptChoice = 1;
 			boolean validInput =false;
@@ -204,13 +228,13 @@ public class Driver {
 						}
 					}
 					if (!found) {
-						break;
+						break;//exits the loop if the department code is unique
 					}
-					sInFile.close();
+					sInFile.close();//closes the file
 				} catch (FileNotFoundException e) {
 					System.err.println("File not Found...Returning to Department Menu");
 					menu.pause();
-					departmentOption();
+					departmentOption();//returns to the department menu
 				}
 		 	}
 
@@ -255,18 +279,20 @@ public class Driver {
 			        input.next(); // Consume the invalid input
 			    }
 			}
-
+		//Use of Polymorphism to Construct a new Department object to be able to use the encapsulated methods
         Entity dept = new Department(deptCode, deptName, regRate, overtimeRate);
+        
         System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         System.out.println("\nDepartment Created Succesfully\n");
         System.out.println("+----------------------+----------------------+-----------------+------------------+\n" +
 	              "| Department Code      | Department Name      | Regular Rate    | Overtime Rate    |\n" +dept.toString(7));
-		dept.store();
+		dept.store();//Calls the store Method to store the class to the file
+		
 		System.out.println("Returning to Main Menu");
 		menu.pause();
 		System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-		departmentOption();
-		//main(null);//returns to main
+		departmentOption();//Returns to the Department menu
+		
 		
 	}
 	public static void updateDeparment() {
@@ -282,20 +308,21 @@ public class Driver {
 				    input.next(); // Consume the invalid input
 				}
 			}
-		
+		//Scans the file to make sure the department Exists
 		try(Scanner sInFile = new Scanner(new File("DepartmentRates.txt"))){
 			int deptCode;
 			String deptName;
 			double regRate, overtimeRate;
 			boolean found = false;
 			int count= 0;
-			ArrayList<Entity> updatedDepartments = new ArrayList<Entity>();
+			ArrayList<Entity> updatedDepartments = new ArrayList<Entity>();//used to store the departments so they can be rewritten to the file; not needed when viewing a file
 			while(sInFile.hasNext()){
 				deptCode = sInFile.nextInt();
 				deptName = sInFile.next();
 				regRate = sInFile.nextDouble();
 				overtimeRate = sInFile.nextDouble();
 				
+				//constructs a new department for each one in the file
 				Department dept1 = new Department(deptCode, deptName, regRate, overtimeRate);
 				
 				if(dept1.getDeptCode() == searchId){
@@ -347,19 +374,19 @@ public class Driver {
 					    }
 					}
 				}
-				//System.out.println("+----------------------+----------------------+-----------------+------------------+\n" +
-			             // "| Department Code      | Department Name      | Regular Rate    | Overtime Rate    |\n" +dept1.toString(7));
-				updatedDepartments.add(dept1);
+			
+				updatedDepartments.add(dept1);//adds each department to the Array
 				count++;
 			}
 			if (!found) {
 				System.err.println("Department not found\n");
 			}else {
 				
+				//this simple clears the file for rewriting
 				FileWriter outFileStream = null;
 				try {
 					outFileStream = new FileWriter(new File("DepartmentRates.txt"),false);
-					outFileStream.close();
+					outFileStream.close();//closes the file
 				} catch (IOException e){
 					e.printStackTrace();
 				}
@@ -369,11 +396,11 @@ public class Driver {
 			              "+----------------------+----------------------+-----------------+------------------+" );
 				for (int i = 0; i < count; i++) {
 					System.out.println(updatedDepartments.get(i).toString(7));
-					updatedDepartments.get(i).store();
+					updatedDepartments.get(i).store();//rewrites all departments to the array
 				}
 			}
 			
-			sInFile.close();
+			sInFile.close();//closes the file
 			
 		} catch (FileNotFoundException e) {
 			System.err.println("File not Found...Returning to Department Menu");
@@ -397,21 +424,23 @@ public class Driver {
 				    input.next(); // Consume the invalid input
 				}
 			}
-		
+		//scans the file and prints the record
 		try(Scanner sInFile = new Scanner(new File("DepartmentRates.txt"))){
 		int deptCode;
 		String deptName;
 		double regRate, overtimeRate;
 		boolean found = false;
 		while(sInFile.hasNext()){
-			deptCode = sInFile.nextInt();
+			deptCode = sInFile.nextInt();//Gets the data from the file
 			deptName = sInFile.next();
 			regRate = sInFile.nextDouble();
 			overtimeRate = sInFile.nextDouble();
 			
+			//constructs department objects as entities 
 			Entity dept1 = new Department(deptCode, deptName, regRate, overtimeRate);
 			if(dept1.getDeptCode() == searchId){
 				found = true;
+				//prints the objects in a tabular manner
 				System.out.println("+----------------------+----------------------+-----------------+------------------+\n" +
 			              "| Department Code      | Department Name      | Regular Rate    | Overtime Rate    |\n" +dept1.toString(7) );
 				break;
@@ -428,7 +457,7 @@ public class Driver {
 		}finally {
 			menu.pause();
 			System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-			departmentOption();
+			departmentOption();//returns to the department menu
 		}
 	}
 	public static void veiwAllDeparment() {
@@ -440,7 +469,7 @@ public class Driver {
 			              "| Department Code      | Department Name      | Regular Rate    | Overtime Rate    |\n" +
 			              "+----------------------+----------------------+-----------------+------------------+" );
 			while(sInFile.hasNext()){
-				deptCode = sInFile.nextInt();
+				deptCode = sInFile.nextInt();//gets the data from the file
 				deptName = sInFile.next();
 				regRate = sInFile.nextDouble();
 				overtimeRate = sInFile.nextDouble();
@@ -536,8 +565,10 @@ public class Driver {
 	public static void addEmployee() {
 		int empID, taxRegistrationNumber, nisNumber, deptCode, birthDay, birthMonth, birthYear, hireDay, hireMonth, hireYear;
         String firstName, lastName, position;
-        double hoursWorked;
+        double hoursWorked;//used for constructing new employees
+        //used for output
         String[] months= {"January","Feburary", "March","April","May", "June","July","August", "September","October","November", "December"};
+        
         // Validate and get empID
         while (true) {
 	        System.out.print("Enter employee ID: ");
@@ -558,7 +589,7 @@ public class Driver {
 				boolean found = false;
 				while(sInFile.hasNext()){
 					
-					empIDInFile = sInFile.nextInt();
+					empIDInFile = sInFile.nextInt();//reads all the Employee data from the file
 					taxRegistrationNumberInFile = sInFile.nextInt();
 					nisNumberInFile = sInFile.nextInt();
 					firstNameInFile = sInFile.next();
@@ -573,7 +604,7 @@ public class Driver {
 					hireMonthInFile = sInFile.nextInt();
 					hireYearInFile = sInFile.nextInt();
 				
-					if(empIDInFile == empID){
+					if(empIDInFile == empID){//checks if the employee is in the file
 						found = true;
 						System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 						System.out.println("Empoyee ID: " + empIDInFile + "\nTRN: " + taxRegistrationNumberInFile + "\nNIS: " + nisNumberInFile 
@@ -587,14 +618,14 @@ public class Driver {
 				if (found) {
 					System.err.println("Employee already Exists try again...\n");
 				}else {
-					break;
+					break;//exits the loop if the ID is unique
 				}
-				sInFile.close();
+				sInFile.close();//close the file
 			
 			} catch (FileNotFoundException e) {
 				System.err.println("File not Found...Returning to Employee Menu");
 				menu.pause();
-				employeeOption();
+				employeeOption();//returns to the employee menu
 			}
         
         }
@@ -662,6 +693,7 @@ public class Driver {
 			        input.next(); // Consume the invalid input
 			    }
 			}
+			//Makes sure the department exists
 			try(Scanner sInFile = new Scanner(new File("DepartmentRates.txt"))){
 				int deptCodeInFile;
 				String deptNameInFile;
@@ -688,12 +720,12 @@ public class Driver {
 				}else {
 					System.err.println("Department not found try again..");
 				}
-				sInFile.close();
+				sInFile.close();//closes the file
 			} catch (FileNotFoundException e) {
 				System.err.println("File not Found...Returning to Employee Menu");
 				menu.pause();
 				System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-				employeeOption();
+				employeeOption();//returns to the employee main menu
 			}
 	 	}
       
@@ -745,7 +777,7 @@ public class Driver {
         System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         // Validate and get birthMonth
         while (true) {
-	        System.out.print("Enter Birth Month: ");
+	        System.out.print("Enter Birth Month (1-12): ");
 	        while (!input.hasNextInt()) {
 	            System.err.println("Invalid input. Please enter a valid integer for birth month.");
 	            System.out.print("Enter Birth Month: ");
@@ -763,7 +795,7 @@ public class Driver {
         System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         // Validate and get birthDay
         while (true) {
-	        System.out.print("Enter Birth Day: ");
+	        System.out.print("Enter Birth Day (1-31): ");
 	        while (!input.hasNextInt()) {
 	            System.err.println("Invalid input. Please enter a valid integer for birth day.");
 	            System.out.print("Enter Birth Day: ");
@@ -807,7 +839,7 @@ public class Driver {
         System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         // Validate and get hireMonth
         while (true) {
-	        System.out.print("Enter Hire Month: ");
+	        System.out.print("Enter Hire Month (1-12): ");
 	        while (!input.hasNextInt()) {
 	            System.err.println("Invalid input. Please enter a valid integer for Hire Month.");
 	            System.out.print("Enter Hire Month: ");
@@ -825,7 +857,7 @@ public class Driver {
         System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         // Validate and get hireDay
         while (true) {
-	        System.out.print("Enter Hire Day: ");
+	        System.out.print("Enter Hire Day (1-31): ");
 	        while (!input.hasNextInt()) {
 	            System.err.println("Invalid input. Please enter a valid integer for Hire Day.");
 	            System.out.print("Enter Hire Day: ");
@@ -847,18 +879,18 @@ public class Driver {
 	        }
 	        
         }
-        
+        //constructs a new employee
         Entity emp1 = new Employee(empID, firstName, lastName, deptCode, position, hoursWorked, taxRegistrationNumber, nisNumber, new Date(birthDay, birthMonth, birthYear),   new Date(hireDay, hireMonth, hireYear));
         System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         System.out.println("\nEmployee Created Succesfully\n");
         //System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         System.out.println(emp1.toString());
         System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-		emp1.store();
+		emp1.store();//stores the employee on the file
 		System.out.println("Returning to Main Menu");
 		menu.pause();
 		System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-		employeeOption();
+		employeeOption();//returns to the main menu
 
 	}
 	public static void updateEmployee() {
@@ -876,7 +908,7 @@ public class Driver {
 			}
 		}
 		
-		try(Scanner sInFile = new Scanner(new File("EmployeePayroll.txt"))){
+		try(Scanner sInFile = new Scanner(new File("EmployeePayroll.txt"))){//opens the file to make sure the employee exists before updating
 			
 			int empID, deptCode, taxRegistrationNumber, nisNumber;
 			String firstName, lastName, position;
@@ -885,10 +917,10 @@ public class Driver {
 		
 			boolean found = false;
 			int count= 0;
-			ArrayList<Entity> updatedEmployees = new ArrayList<Entity>();
+			ArrayList<Entity> updatedEmployees = new ArrayList<Entity>();//used to store the employees while the target is being updated
 			while(sInFile.hasNext()){
 				
-				empID = sInFile.nextInt();
+				empID = sInFile.nextInt();//stores the values in temporary containers
 				taxRegistrationNumber = sInFile.nextInt();
 				nisNumber = sInFile.nextInt();
 				firstName = sInFile.next();
@@ -902,9 +934,10 @@ public class Driver {
 				hireDay = sInFile.nextInt();
 				hireMonth = sInFile.nextInt();
 				hireYear = sInFile.nextInt();
-			
+				
+				//constructs a new employee
 				Employee emp1 = new Employee(empID, firstName, lastName, deptCode, position, hoursWorked, taxRegistrationNumber, nisNumber, new Date(birthDay, birthMonth, birthYear),   new Date(hireDay, hireMonth, hireYear));
-				if(emp1.getEmpID() == searchId){
+				if(emp1.getEmpID() == searchId){//checks if the ID numbers match
 					found = true;
 					System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 					System.out.println("Empoyee ID: " + empID + "\nTRN: " + taxRegistrationNumber + "\nNIS: " + nisNumber 
@@ -1003,17 +1036,17 @@ public class Driver {
 								}
 							}
 							if (deptfound) {
-								break;
+								break;//exists the loop if the department is found
 							}else {
 								System.err.println("Department not found try again..");
 							}
-							dptINFile.close();
+							dptINFile.close();//closes the file
 						} catch (FileNotFoundException e) {
 						
 							System.err.println("File not Found...Returning to Employee Menu");
 							menu.pause();
 							System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-							employeeOption();
+							employeeOption();//returns to the department menu
 						}
 				 	}
 			        emp1.setDeptCode(deptCode);
@@ -1066,14 +1099,11 @@ public class Driver {
 				        	System.err.println("Invalid BIRTH YEAR try again... Enter a year between 1907-2006");
 				        }
 			        }
-			        
-			        
-			        
-			        
+			   
 			        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 			        // Validate and get birthMonth
 			        while (true) {
-				        System.out.print("Enter Birth Month: ");
+				        System.out.print("Enter Birth Month (1-12): ");
 				        while (!input.hasNextInt()) {
 				            System.err.println("Invalid input. Please enter a valid integer for birth month.");
 				            System.out.print("Enter Birth Month: ");
@@ -1091,7 +1121,7 @@ public class Driver {
 			        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 			        // Validate and get birthDay
 			        while (true) {
-				        System.out.print("Enter Birth Day: ");
+				        System.out.print("Enter Birth Day (1-31): ");
 				        while (!input.hasNextInt()) {
 				            System.err.println("Invalid input. Please enter a valid integer for birth day.");
 				            System.out.print("Enter Birth Day: ");
@@ -1136,7 +1166,7 @@ public class Driver {
 			        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 			        // Validate and get hireMonth
 			        while (true) {
-				        System.out.print("Enter Hire Month: ");
+				        System.out.print("Enter Hire Month (1-12): ");
 				        while (!input.hasNextInt()) {
 				            System.err.println("Invalid input. Please enter a valid integer for Hire Month.");
 				            System.out.print("Enter Hire Month: ");
@@ -1155,7 +1185,7 @@ public class Driver {
 			        
 			        // Validate and get hireDay
 			        while (true) {
-				        System.out.print("Enter Hire Day: ");
+				        System.out.print("Enter Hire Day (1-31): ");
 				        while (!input.hasNextInt()) {
 				            System.err.println("Invalid input. Please enter a valid integer for Hire Day.");
 				            System.out.print("Enter Hire Day: ");
@@ -1178,16 +1208,16 @@ public class Driver {
 				        
 			        }
 			        emp1.setDateOfHire(new Date(hireDay, hireMonth, hireYear));
-			        emp1.toString();
+			        emp1.toString();//displays the employee attributes
 				}
-				updatedEmployees.add(emp1);
+				updatedEmployees.add(emp1);//adds the employee to the file for rewriting
 				count++;
 		
 			}
 			if (!found) {
 				System.err.println("Employee not found\n");
 			}else {
-				
+				//clears the file before rewriting
 				FileWriter outFileStream = null;
 				try {
 					outFileStream = new FileWriter(new File("EmployeePayroll.txt"),false);
@@ -1198,11 +1228,11 @@ public class Driver {
 				
 				for (int i = 0; i < count; i++) {
 					System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-					System.out.println(updatedEmployees.get(i).toString());
-					updatedEmployees.get(i).store();
+					System.out.println(updatedEmployees.get(i).toString());//displays the attributes of the employees
+					updatedEmployees.get(i).store();//stores each employee to the file
 				}
 			}
-			sInFile.close();
+			sInFile.close();//closes the file
 		
 		} catch (FileNotFoundException e) {
 			System.err.println("File not Found...Returning to Employee Menu");
@@ -1210,7 +1240,7 @@ public class Driver {
 		}finally {
 			menu.pause();
 			System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-			employeeOption();
+			employeeOption();//returns to the employee menu
 		}
 		
 		
@@ -1229,7 +1259,7 @@ public class Driver {
 				}
 			}
 
-		
+		//scans the file for the matching employee id number
 		try(Scanner sInFile = new Scanner(new File("EmployeePayroll.txt"))){
 		
 			int empID, deptCode, taxRegistrationNumber, nisNumber;
@@ -1255,7 +1285,7 @@ public class Driver {
 				hireMonth = sInFile.nextInt();
 				hireYear = sInFile.nextInt();
 			
-				if(empID == searchId){
+				if(empID == searchId){//checks for a match then prints the attributes
 					found = true;
 					System.out.println("-------------------------------------------------------------------------------");
 					System.out.println("Empoyee ID: " + empID + "\nTRN: " + taxRegistrationNumber + "\nNIS: " + nisNumber 
@@ -1276,7 +1306,7 @@ public class Driver {
 		}finally {
 			menu.pause();
 			System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-			employeeOption();
+			employeeOption();//returns to the employee menu
 		}
 	}
 	public static void veiwAllEmployee() {
@@ -1287,7 +1317,7 @@ public class Driver {
 			double hoursWorked;
 			int birthMonth, birthDay, birthYear, hireMonth, hireDay, hireYear;
 	
-			while(sInFile.hasNext()){
+			while(sInFile.hasNext()){//continuously scans the file then prints all the related values as employee attrubutes 
 				
 				empID = sInFile.nextInt();
 				taxRegistrationNumber = sInFile.nextInt();
@@ -1303,7 +1333,8 @@ public class Driver {
 				hireDay = sInFile.nextInt();
 				hireMonth = sInFile.nextInt();
 				hireYear = sInFile.nextInt();
-
+				
+				//prints the values no need for object construction
 				//System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 				System.out.println("Empoyee ID: " + empID + "\nTRN: " + taxRegistrationNumber + "\nNIS: " + nisNumber 
 						+ "\nFirstName: " + firstName + "\nLastName: " + lastName + "\nDepartment Code" + deptCode + "\nPosition: " 
@@ -1318,7 +1349,7 @@ public class Driver {
 			}finally {	
 				menu.pause();
 				System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-				employeeOption();
+				employeeOption();//returns to employee main menu
 			}
 		
 	}
@@ -1326,7 +1357,7 @@ public class Driver {
 		
 		int searchId;
 
-		// Validate and set department code
+		// Validate and set searching Employee id
 		while (true) {
 			System.out.print("Enter Employee ID you wish to DELETE: ");
 			if (input.hasNextInt()) {
@@ -1338,7 +1369,7 @@ public class Driver {
 			}
 		}
 
-	
+		
 		try(Scanner sInFile = new Scanner(new File("EmployeePayroll.txt"))){
 		
 			int empID, deptCode, taxRegistrationNumber, nisNumber;
@@ -1348,10 +1379,10 @@ public class Driver {
 		
 			boolean found = false;
 			int count= 0;
-			ArrayList<Entity> updatedEmployees = new ArrayList<Entity>();
+			ArrayList<Entity> updatedEmployees = new ArrayList<Entity>();//creates an array to store all the employees for rewriting
 			while(sInFile.hasNext()){
 				
-				empID = sInFile.nextInt();
+				empID = sInFile.nextInt();//scans the file for all the related attributes
 				taxRegistrationNumber = sInFile.nextInt();
 				nisNumber = sInFile.nextInt();
 				firstName = sInFile.next();
@@ -1366,6 +1397,7 @@ public class Driver {
 				hireMonth = sInFile.nextInt();
 				hireYear = sInFile.nextInt();
 				
+				//constructs a employee object
 				Employee emp1 = new Employee(empID, firstName, lastName, deptCode, position, hoursWorked, taxRegistrationNumber, nisNumber, new Date(birthDay, birthMonth, birthYear),   new Date(hireDay, hireMonth, hireYear));
 				if(emp1.getEmpID() == searchId){
 					found = true;
@@ -1376,7 +1408,7 @@ public class Driver {
 							+ "\nDate Of Hire: " + hireDay + "/" + hireMonth + "/" + hireYear);
 					System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 				}else {
-					updatedEmployees.add(emp1);
+					updatedEmployees.add(emp1);//doesnt add the selected employee to the array
 					count++;
 				}
 			}
@@ -1386,7 +1418,7 @@ public class Driver {
 				
 				FileWriter outFileStream = null;
 				try {
-					outFileStream = new FileWriter(new File("EmployeePayroll.txt"),false);
+					outFileStream = new FileWriter(new File("EmployeePayroll.txt"),false);//clears the file
 					outFileStream.close();
 				} catch (IOException e){
 					e.printStackTrace();
@@ -1396,10 +1428,10 @@ public class Driver {
 				for (int i = 0; i < count; i++) {
 					
 					System.out.println(updatedEmployees.get(i).toString());
-					updatedEmployees.get(i).store();
+					updatedEmployees.get(i).store();//restores each employee to the file which doesnt include the selected one
 				}
 			}
-			sInFile.close();
+			sInFile.close();//closes the file
 		
 		} catch (FileNotFoundException e) {
 			System.err.println("File not Found...Returning to Employee Menu");
@@ -1407,7 +1439,7 @@ public class Driver {
 		}finally {
 			menu.pause();
 			System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-			employeeOption();	
+			employeeOption();//returns to employee menu
 		}
 		
 	}
@@ -1484,7 +1516,7 @@ public class Driver {
 	}
 	
 	public static void processPayroll() {
-		ArrayList<ProcessedPayroll> payroll = new ArrayList<ProcessedPayroll>();
+		ArrayList<ProcessedPayroll> payroll = new ArrayList<ProcessedPayroll>();//creates a payroll arraylist , used for storing payroll objects
 		
 		FileWriter outFileStream = null;
 		try {
@@ -1494,7 +1526,7 @@ public class Driver {
 			e.printStackTrace();
 		}
 		
-		try(Scanner sInFile = new Scanner(new File("EmployeePayroll.txt"))){
+		try(Scanner sInFile = new Scanner(new File("EmployeePayroll.txt"))){//scans the emplyee file
 			
 			int empID, deptCode, taxRegistrationNumber, nisNumber;
 			String firstName, lastName, position;
@@ -1503,7 +1535,7 @@ public class Driver {
 			int count = 0;
 			while(sInFile.hasNext()){
 				
-				empID = sInFile.nextInt();
+				empID = sInFile.nextInt();//reads all the related employee attributes
 				taxRegistrationNumber = sInFile.nextInt();
 				nisNumber = sInFile.nextInt();
 				firstName = sInFile.next();
@@ -1517,23 +1549,24 @@ public class Driver {
 				hireDay = sInFile.nextInt();
 				hireMonth = sInFile.nextInt();
 				hireYear = sInFile.nextInt();
-			
+				
+				//constructs a new employee
 				Employee emp1 = new Employee(empID, firstName, lastName, deptCode, position, hoursWorked, taxRegistrationNumber, nisNumber, new Date(birthDay, birthMonth, birthYear),   new Date(hireDay, hireMonth, hireYear));
-				payroll.add(new ProcessedPayroll(emp1));
-				payroll.get(count).calculatePay();
-				payroll.get(count).store();
+				payroll.add(new ProcessedPayroll(emp1));//uses the employee to construct a new payroll record
+				payroll.get(count).calculatePay();//calculates the pay details of each employee
+				payroll.get(count).store();//then stores the employee to the processed payroll file
 				count++;
 			}
 			System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 			System.out.println("\nPayroll Processed...........");
-			sInFile.close();
+			sInFile.close();//closes the employee file
 			
 		} catch (FileNotFoundException e) {
 			System.err.println("File not Found Returning....to Employee Menu");
 		}finally {
 			menu.pause();
 			System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-			payrollOption();
+			payrollOption();//returns to the main payroll menu
 		}
 	}
 	public static void veiwPayroll() {
@@ -1548,7 +1581,7 @@ public class Driver {
 			    input.next(); // Consume the invalid input
 			}
 		}
-		
+		//scans the payroll file for a specific employee id number then prints the attributes of their payroll
 		try(Scanner sInFile = new Scanner(new File("ProcessedPayroll.txt"))){
 			int deptCodeInFile, empIDInFile;
 			String chequeNumberInFile, firstNameInFile, lastNameInFile, positionInFile;
@@ -1578,7 +1611,7 @@ public class Driver {
 			if (!found) {
 				System.err.println("Employee not found\n");
 			}
-			sInFile.close();
+			sInFile.close();//closes the input file
 		
 		} catch (FileNotFoundException e) {
 			System.err.println("File not Found...");
@@ -1586,7 +1619,7 @@ public class Driver {
 		}finally {
 			menu.pause();
 			System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-			payrollOption();
+			payrollOption();//returns to the main menu
 		}
 	}
 	public static void veiwDeparmentPayroll() {
@@ -1601,7 +1634,7 @@ public class Driver {
 			    input.next(); // Consume the invalid input
 			}
 		}
-		
+		//scans the payroll file for a specific department code then displays the attributes of all employees that belong to that specific department
 		try(Scanner sInFile = new Scanner(new File("ProcessedPayroll.txt"))){
 			int deptCodeInFile, empIDInFile;
 			String chequeNumberInFile, firstNameInFile, lastNameInFile, positionInFile;
@@ -1631,7 +1664,7 @@ public class Driver {
 			if (!found) {
 				System.err.println("Employee not found\n");
 			}
-			sInFile.close();
+			sInFile.close();//closes the file
 		
 		} catch (FileNotFoundException e) {
 			System.err.println("File not Found...");
@@ -1639,7 +1672,7 @@ public class Driver {
 		}finally {
 			menu.pause();
 			System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-			payrollOption();
+			payrollOption();//returns to the main payroll menu
 		}
 	}
 
