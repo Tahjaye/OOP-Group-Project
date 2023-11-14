@@ -1,5 +1,19 @@
 package domain;
 
+/*
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------
+NOTES:
+Date: 10/15/2023
+Author: Tahjaye Edwards
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------
+This file pertains to Questions 8 which states:
+The company also records the date of birth and date the employee was hired.
+
+//Implemented before I realized there is an built in Date class.
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+*/
+
 public class Date {
 	private int day;
 	private int month;
