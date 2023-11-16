@@ -47,6 +47,7 @@ public class Menu {
         System.out.println(YELLOW_TEXT + "\n\n1. Department Data" + DEFAULT); //This concatenates the color to the string text, then sets the color to default again
         System.out.println(GREEN + "2. Employee Data" + DEFAULT);
         System.out.println(MAGENTA + "3. Employee Payroll" + DEFAULT);
+        System.out.println(RED + "4. Open User Manual" + DEFAULT);
         System.out.println(RED + "0. Exit" + DEFAULT);
         
     }
